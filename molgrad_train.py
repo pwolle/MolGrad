@@ -19,7 +19,7 @@ name = f'model_{num_atoms}_{num_layers}_{bond_depth}_{atom_depth}_{num_heads}'
 
 dataset = get_gdbs(128, num_atoms)
 
-model = Transformer(4, 64, 256, 4)
+model = Transformer(num_layers, bond_depth, atom_depth, num_heads)
 
 b, a = next(iter(dataset))
 model(b, a)  # to init model
