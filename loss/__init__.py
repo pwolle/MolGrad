@@ -1,2 +1,2 @@
 from .diffusion import sdiffusion_loss, molecule_sdiffusion_loss
-from .regression import regression_l1
+from .regression import regression_l1, molecule_sdiffusion_regression

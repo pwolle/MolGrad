@@ -2,10 +2,7 @@ import tensorflow as tf
 
 
 def flat_sum_batch_mean(x):
-    x = tf.reshape(x, [x.shape[0], -1])
-    x = tf.reduce_sum(x, -1)
-    x = tf.reduce_mean(x)
-    return x
+    return tf.reduce_sum(x) / x.shape[0]
 
 
 def broadcast(x, y):
