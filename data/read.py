@@ -30,6 +30,13 @@ def parse_molecule(features, num_bond_types=6, num_atom_types=6):
     return bonds, atoms
 
 
+def pad_atom(bonds, atoms, max_atoms):
+    ndiff = max_atoms - bonds.shape[0]
+    bonds = tf.pad(bonds, [[0, ndiff], [0, ndiff]])
+    atoms = tf.pad(atoms, [[0, ndiff]])
+    return bonds, atoms
+
+
 @tf.function
 def gdb_parse(example):
     features = decode_example(example)
@@ -40,15 +47,41 @@ def gdb_parse(example):
 def freesolv_parse(example):
     solubility_feature = tf.io.FixedLenFeature([], tf.float32)
     features = decode_example(example, solubility=solubility_feature)
-    bonds, atoms = parse_molecule(features)
+    bonds, atoms = parse_molecule(features, num_atom_types=3)
     solubility = features['solubility']
     return bonds, atoms, solubility
+
+
+@tf.function
+def gdbscrippen_parse(example):
+    logp_feature = tf.io.FixedLenFeature([], tf.float32)
+    features = decode_example(example, logp=logp_feature)
+    bonds, atoms = parse_molecule(features)
+    logp = features['logp']
+    return bonds, atoms, logp
 
 
 def get_gdbs(batch_size, num_atoms, path='./data/tfrecords/gdb', split='train'):
     path = os.path.join(path, f'{num_atoms}/{split}.tfrecord')
     dataset = tf.data.TFRecordDataset(path)
     dataset = dataset.map(gdb_parse, -1)
+    dataset = dataset.batch(batch_size).cache()
+    return dataset
+
+
+def get_gdbssolve(batch_size, num_atoms, path='./data/tfrecords/gdbssolve', split='train'):
+    path = os.path.join(path, f'{num_atoms}/{split}.tfrecord')
+    dataset = tf.data.TFRecordDataset(path)
+    dataset = dataset.map(freesolv_parse, -1)
+    dataset = dataset.batch(batch_size).cache()
+    return dataset
+
+
+def get_gdbscrippen(batch_size, num_atoms, path='./data/tfrecords/gdbscrippen', split='train'):
+    path = os.path.join(path, f'{num_atoms}/{split}.tfrecord')
+    dataset = tf.data.TFRecordDataset(path)
+    dataset = dataset.shuffle(batch_size * 7)
+    dataset = dataset.map(gdbscrippen_parse, -1)
     dataset = dataset.batch(batch_size).cache()
     return dataset
 
@@ -73,8 +106,8 @@ def get_toy(batch_size):
 
 
 if __name__ == "__main__":
-    dataset = get_freesolv(1)
+    dataset = get_gdbscrippen(1, 6)
 
-    x = next(iter(dataset))
+    x = next(iter(dataset))[-1]
 
     print(x)
