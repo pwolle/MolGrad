@@ -9,7 +9,7 @@ from tqdm import tqdm
 
 dataset = get_freesolv(128)
 
-model = RegressionTransformer(4, 64, 256, 4)
+model = RegressionTransformer(4, 64, 256, 4, atom_in=2)
 
 b, a, _ = next(iter(dataset))
 model(b, a)  # to init model
@@ -38,7 +38,6 @@ def train_step(bonds, atoms, solubility):
 
 step = 0
 writer = tf.summary.create_file_writer(f'logs/solv/teacher6')
-
 
 # since the whole dataset fits into one batch
 bonds, atoms, solubility = next(iter(dataset))

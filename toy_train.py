@@ -3,7 +3,6 @@ import tensorflow as tf
 from model.baseline import get_mlp
 from loss import sdiffusion_loss
 from data import get_toy
-from tensorflow_addons.optimizers import MovingAverage
 
 dataset = get_toy(512)
 

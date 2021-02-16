@@ -18,9 +18,17 @@ model.load_weights('model/saved/synthetic/model')
 x = tf.random.normal(data.shape)
 
 
+params = {"ytick.color": "w",
+          "xtick.color": "w",
+          "axes.labelcolor": "w",
+          "axes.edgecolor": "w"}
+
+plt.rcParams.update(params)
+
+
 plt.rcParams.update({'font.size': 10})
 
-nplots = 4
+nplots = 5
 
 fig, axs = plt.subplots(
     1, nplots,
@@ -32,29 +40,29 @@ ax_num = 0
 
 alpha_0 = 1.
 tau = 3.02
-N = 501
+N = 1001
 
 for i in range(N):
 
-    if i == 0 or i == 100 or i == 200 or i == 500:
+    if i == 0 or i == 50 or i == 100 or i == 250 or i == 500: #or i == 750 or i == 1000:
         ax = axs[ax_num]
         ax_num += 1
 
         xs = tf.nn.sigmoid(x)
 
-        ax.scatter(xs[:, 0], xs[:, 1], 2)
+        ax.scatter(xs[:, 0], xs[:, 1], 2, c='tab:orange')
 
         ax.set_xlabel(f'Schritt {i}')
         ax.set_aspect(1)
 
         if i > 0:
-            ax.tick_params(axis='both', which='both', length=0)
+            ax.tick_params(axis='y', which='both', length=0)
 
     score = model(tf.nn.sigmoid(x))
 
     alpha = alpha_0 * tf.exp(-tau * i / N)
 
-    x = langevin_step(x, score, alpha, 0.6, 0.1)
+    x = langevin_step(x, score, alpha, 0.78, 0.1)
 
     alpha = alpha * 0.994
 
@@ -62,8 +70,8 @@ for i in range(N):
 fig.savefig(
     'figs/generatediffusion2d.png',
     bbox_inches='tight',
-    transparent=False,
-    dpi=90)
+    transparent=True,
+    dpi=256)
 
 
 fig, axs = plt.subplots(
@@ -79,7 +87,7 @@ for i, ax in enumerate(axs[:-1]):
 
     y, _ = sdiffusion(data, t)
 
-    ax.scatter(y[:, 0], y[:, 1], 2)
+    ax.scatter(y[:, 0], y[:, 1], 2, c='tab:orange')
 
     ax.set_xlabel(f't={t:.2f}')
     ax.set_aspect(1)
@@ -94,17 +102,17 @@ t = tf.random.uniform([data.shape[0]])
 
 y, _ = sdiffusion(data, t)
 
-ax.scatter(y[:, 0], y[:, 1], 2)
+ax.scatter(y[:, 0], y[:, 1], 2, c='tab:orange')
 
 ax.set_xlabel('t$∼\mathcal{U}\,(0,1)$')
 ax.set_aspect(1)
 
 if i > 0:
-    ax.tick_params(axis='both', which='both', length=0)
+    ax.tick_params(axis='y', which='both', length=0)
 
 
 fig.savefig(
     'figs/forwarddiffusion2d.png',
     bbox_inches='tight',
-    transparent=False,
-    dpi=90)
+    transparent=True,
+    dpi=256)

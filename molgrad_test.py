@@ -1,8 +1,8 @@
 import tensorflow as tf
+import numpy as np
 
 from model.transformer import Transformer
-from loss import molecule_sdiffusion_loss
-from generation import langevin_step
+from data.utils import save_molecules, postprocess
 from data import get_gdbs
 from loss.utils import *
 from math import sqrt
@@ -20,7 +20,7 @@ num_heads = 16
 name = f'model_{num_atoms}_{num_layers}_{bond_depth}_{atom_depth}_{num_heads}'
 
 
-dataset = get_gdbs(1, num_atoms)
+dataset = get_gdbs(64, num_atoms)
 
 model = Transformer(num_layers, bond_depth, atom_depth, num_heads)
 
@@ -31,7 +31,7 @@ model.load_weights('model/saved/gdb/' + name)
 
 
 bond = tf.random.normal(b.shape)
-bond = preprocess_bond_noise(b)
+bond = preprocess_bond_noise(bond)
 
 atom = tf.random.normal(a.shape)
 
@@ -39,7 +39,7 @@ atom = tf.random.normal(a.shape)
 N = 100
 tau = 3
 
-lmbda = 0.36
+lmbda = 0.63
 lmbda_inv = 1 / lmbda
 
 diverge = 1e-2
@@ -48,8 +48,6 @@ alpha_0 = lmbda
 
 
 for i in range(N):
-    # bond = mask_diagonal(bond)
-
     alpha = alpha_0 * tf.exp(-tau * i / N)
 
     bond_s = tf.nn.sigmoid(bond)
@@ -65,8 +63,8 @@ for i in range(N):
 
     atom_z = tf.random.normal(atom.shape)
 
-    bond_dif = 2 * sqrt(alpha) * lmbda * bond_z  # * 1e-1
-    atom_dif = 2 * sqrt(alpha) * lmbda * atom_z  # * 1e-1
+    bond_dif = sqrt(2 * alpha) * lmbda * bond_z  # * 1e-1
+    atom_dif = sqrt(2 * alpha) * lmbda * atom_z  # * 1e-1
 
     bond_div = alpha * diverge * bond
     atom_div = alpha * diverge * atom
@@ -94,8 +92,7 @@ def postprocess(v, e):
     return v, e
 
 
-bond, atom = postprocess(bond, atom)
-
+save_molecules(bond, atom)
 
 pprint(atom[0].numpy())
 pprint(bond[0].numpy())
