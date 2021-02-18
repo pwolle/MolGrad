@@ -9,7 +9,7 @@ from math import sqrt
 from pprint import pprint
 
 
-num_atoms = 6
+num_atoms = 10
 
 num_layers = 12
 bond_depth = 256
@@ -39,7 +39,7 @@ atom = tf.random.normal(a.shape)
 N = 100
 tau = 3
 
-lmbda = 0.63
+lmbda = 0.5
 lmbda_inv = 1 / lmbda
 
 diverge = 1e-2
@@ -75,22 +75,8 @@ for i in range(N):
     if i % (N // 10) == 0:
         print(i, alpha.numpy())
 
-        # print(tf.reduce_max(bond).numpy())
-        # print(tf.reduce_max(atom).numpy())
 
-
-def postprocess(v, e):
-    vc = tf.zeros([v.shape[0], v.shape[1], v.shape[2], 1])
-    v = tf.concat([vc, v], -1)
-    v = tf.nn.sigmoid(v)
-    v = tf.math.argmax(v, -1)
-
-    ev = tf.zeros([e.shape[0], e.shape[1], 1])
-    e = tf.concat([ev, e], -1)
-    e = tf.nn.sigmoid(e)
-    e = tf.math.argmax(e, -1)
-    return v, e
-
+bond, atom = postprocess(bond, atom)
 
 save_molecules(bond, atom)
 
