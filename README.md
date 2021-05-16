@@ -9,7 +9,7 @@ MolGrad is the first method to score-based generative modelling for molecules. T
 A short explanation video is available [here](https://vimeo.com/546206651) (German).
 
 ### New Architecture
-![transformer_gnn](https://user-images.githubusercontent.com/77510444/118408139-61f02b00-b684-11eb-95bb-868cb25b3c3f.png)
+![transformer_gnn](https://user-images.githubusercontent.com/77510444/118408189-b7c4d300-b684-11eb-9e48-b43f807badb3.png)
 
 
 ## Setup
