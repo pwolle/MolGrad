@@ -1,2 +1,4 @@
-# MolGrad: Moleküle generieren und optimieren mit KI
-Jugend forscht Projekt 2021 von Paul Wollenhaupt
+# MolGrad - a Method for Molecule Generation and Optimization
+## Jugend forscht project 2021 by Paul Wollenhaupt
+
+
