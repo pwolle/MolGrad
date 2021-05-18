@@ -25,7 +25,7 @@ C:\...> git clone https://github.com/unitdeterminant/MolGrad.git
 Install anaconda and add it to `PATH` like [this](https://docs.anaconda.com/anaconda/install/). Then navigate to the repository in your shell, create a new environment from the environment.yml file and activate it.
 
 ```console
-C:\...\MolGrad-main> conda env create --name molgrad --file= environment.yml
+C:\...\MolGrad-main> conda env create --name molgrad --file environment.yml
 C:\...\MolGrad-main> conda activate molgrad
 ```
 
