@@ -245,12 +245,10 @@ class FixMoleculeDataset:
 
 if __name__ == '__main__':
     dataset = FixMoleculeDataset(
-        rewrite=False, supervised=False).get_split()
+        rewrite=True, supervised=True).get_split('train')
 
     dataset = dataset.batch(32)
 
     data = next(iter(dataset))
 
-    print(data[0].shape, data[1].shape)
-
-    # print(DataFromSmiles('CCCCCC'))
+    print(data[0].shape, data[1].shape, data[2].shape)
