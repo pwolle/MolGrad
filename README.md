@@ -47,7 +47,7 @@ Start tensorboard (also in the environment), open your browser and navigate to [
 
 ### Retrain Models
 
-[Download](****) the file called `gdb13.tgz` from official page [here](https://gdb.unibe.ch/downloads/), unzip it and move it to `data\raw\`. The folder structure should be:
+Download the file called `gdb13.tgz` from official page [here](https://gdb.unibe.ch/downloads/), unzip it and move it to `data\raw\`. The folder structure should be:
 
 ```console
 MolGrad-main
