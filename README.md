@@ -8,7 +8,7 @@ MolGrad learns from drug databases in a completely unsupervised manner. It can u
 
 MolGrad is the first method to score-based generative modelling for molecules. This approach has recently shown a lot of promise in other data domains [3-6] and the [paper](https://github.com/unitdeterminant/MolGrad/raw/main/paper.pdf) (German) argues, that with a few novel adjustments and a newly developed architecture, score-based is a perfect fit for molecules.
 
-A short explanation video is available [here](https://vimeo.com/546206651) (German).
+A short explanation video is available [here](https://vimeo.com/553621029) (German).
 
 ### New Architecture
 
