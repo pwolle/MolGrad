@@ -6,7 +6,7 @@ This repo contains the official implementation of the Jugend forscht project 202
 
 MolGrad learns from drug databases in a completely unsupervised manner. It can use that knowledge to aid the drug development process, by (1) generating new, high quality molecules with high synthetic accessibility [1] and quantitative estimated druglikeliness [2] when searching for a lead compound and (2) further optimizing/editing specific traits of these compounds like their solubility.
 
-MolGrad is the first method to score-based generative modelling for molecules. This approach has recently shown a lot of promise in other data domains [3-6] and the [paper](https://github.com/unitdeterminant/MolGrad/raw/main/paper.pdf) (German) argues, that with a few novel adjustments and a newly developed architecture, score-based is a perfect fit for molecules.
+MolGrad is the first method to score-based generative modelling for molecules. This approach has recently shown a lot of promise in other data domains [3-6] and the [paper](https://github.com/unitdeterminant/MolGrad/raw/main/paper.pdf) (German) argues, that with a few novel adjustments and a newly developed architecture, score-based modelling is a perfect fit for molecules.
 
 A short explanation video is available [here](https://vimeo.com/553621029) (German).
 
