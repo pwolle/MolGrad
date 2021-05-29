@@ -77,7 +77,7 @@ To cite this work use:
 
 ```bibtex
 @unpublished{
-    Wollenhaupt2020MolGrad,
+    wollenhaupt2020molgrad,
     author = "Paul Wollenhaupt",
     title  = "MolGrad: Moleküle generieren und optimieren mit KI",
     year   = 2020}
